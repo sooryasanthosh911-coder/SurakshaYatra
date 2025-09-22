@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SurakshaYatra - Smart Tourist Safety System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .hero-section {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1547823328-5973a903337a?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        a.nav-link {
+            transition: all 0.3s ease-in-out;
+        }
+        .active-link {
+            background-color: #eef2ff; /* Replaces @apply bg-indigo-100 */
+            color: #4338ca; /* Replaces @apply text-indigo-700 */
+            font-weight: 600; /* Replaces @apply font-semibold */
+            box-shadow: 0 0 12px 2px rgba(99, 102, 241, 0.4); /* Glow effect */
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md fixed w-full z-50">
+        <nav class="container mx-auto px-6 py-2 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-indigo-600 flex-shrink-0">SurakshaYatra</a>
+
+            <div class="hidden md:flex flex-grow justify-center">
+                <div class="flex items-center space-x-2">
+                    <a href="#problem" class="nav-link text-gray-600 hover:bg-gray-100 transition px-4 py-2 rounded-full">The Problem</a>
+                    <a href="#solution" class="nav-link text-gray-600 hover:bg-gray-100 transition px-4 py-2 rounded-full">Our Solution</a>
+                    <a href="#features" class="nav-link text-gray-600 hover:bg-gray-100 transition px-4 py-2 rounded-full">Features</a>
+                    <a href="#outcomes" class="nav-link text-gray-600 hover:bg-gray-100 transition px-4 py-2 rounded-full">Outcomes</a>
+                </div>
+            </div>
+
+            <div class="hidden md:flex items-center space-x-3 flex-shrink-0">
+                <a href="login.html" class="text-gray-600 hover:bg-gray-100 transition font-medium px-4 py-2 rounded-full">Login</a>
+                <a href="#contact" class="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 transition font-medium">Contact Us</a>
+            </div>
+
+            <button id="mobile-menu-button" class="md:hidden">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white">
+            <a href="#problem" class="block py-2 px-4 text-sm text-gray-700 hover:bg-indigo-50">The Problem</a>
+            <a href="#solution" class="block py-2 px-4 text-sm text-gray-700 hover:bg-indigo-50">Our Solution</a>
+            <a href="#features" class="block py-2 px-4 text-sm text-gray-700 hover:bg-indigo-50">Features</a>
+            <a href="#outcomes" class="block py-2 px-4 text-sm text-gray-700 hover:bg-indigo-50">Outcomes</a>
+            <a href="login.html" class="block py-2 px-4 text-sm text-gray-700 hover:bg-indigo-50">Login</a>
+            <a href="#contact" class="block py-2 px-4 text-sm text-gray-700 hover:bg-indigo-50">Contact Us</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section text-white pt-32 pb-20">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">Revolutionizing Tourist Safety Across India</h1>
+            <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto">An integrated system leveraging AI, Geo-Fencing, and Blockchain to ensure every journey is safe, secure, and serene.</p>
+            <a href="#solution" class="bg-white text-indigo-600 font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-200 transition transform hover:scale-105">Discover Our Solution</a>
+        </div>
+    </section>
+
+    <main>
+        <!-- Problem Section -->
+        <section id="problem" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 text-center">The Challenge: Ensuring Tourist Safety in a Diverse Landscape</h2>
+                <p class="text-lg text-gray-600 mb-12 text-center max-w-3xl mx-auto">While India's tourism sector is booming, the diverse terrain and infrastructure present significant challenges related to tourist safety, emergency response, and real-time monitoring. Protecting visitors is paramount for sustainable growth.</p>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="p-6">
+                        <i data-lucide="shield-alert" class="w-16 h-16 mx-auto text-red-500 mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Safety & Security Risks</h3>
+                        <p class="text-gray-600">Tourists can be vulnerable to unforeseen incidents, especially in remote or unfamiliar areas with limited connectivity.</p>
+                    </div>
+                    <div class="p-6">
+                        <i data-lucide="siren" class="w-16 h-16 mx-auto text-amber-500 mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Delayed Emergency Response</h3>
+                        <p class="text-gray-600">Coordinating a rapid response during emergencies is complex due to varied geography and communication gaps.</p>
+                    </div>
+                    <div class="p-6">
+                        <i data-lucide="map-x" class="w-16 h-16 mx-auto text-blue-500 mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Lack of Real-Time Monitoring</h3>
+                        <p class="text-gray-600">The inability to monitor tourist locations in real-time hinders proactive safety measures and incident prevention.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Solution Section -->
+        <section id="solution" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 text-center">The SurakshaYatra Solution</h2>
+                <p class="text-lg text-gray-600 mb-12 text-center max-w-3xl mx-auto">We propose a complete Smart Tourist Safety Monitoring & Incident Response System that integrates cutting-edge technologies to create a secure environment for tourists nationwide.</p>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-lg shadow-lg text-center hover:shadow-xl transition-shadow">
+                        <div class="bg-indigo-100 rounded-full p-4 inline-block mb-4">
+                            <i data-lucide="brain-circuit" class="w-12 h-12 text-indigo-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Artificial Intelligence</h3>
+                        <p class="text-gray-600">For real-time monitoring of tourist activities, identifying potential risks, and detecting anomalies through intelligent pattern analysis.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-lg text-center hover:shadow-xl transition-shadow">
+                        <div class="bg-indigo-100 rounded-full p-4 inline-block mb-4">
+                            <i data-lucide="map-pin" class="w-12 h-12 text-indigo-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Geo-Fencing</h3>
+                        <p class="text-gray-600">Creates virtual boundaries around safe zones, national parks, and tourist trails, triggering alerts if a tourist strays into a restricted or unsafe area.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-lg text-center hover:shadow-xl transition-shadow">
+                        <div class="bg-indigo-100 rounded-full p-4 inline-block mb-4">
+                            <i data-lucide="fingerprint" class="w-12 h-12 text-indigo-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Blockchain Digital ID</h3>
+                        <p class="text-gray-600">Provides secure, tamper-proof management of tourist identity and emergency contact information, ensuring data privacy and integrity.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 text-center">Core System Features</h2>
+                <p class="text-lg text-gray-600 mb-12 text-center max-w-3xl mx-auto">Our platform is designed to provide comprehensive safety coverage through a suite of powerful, interconnected features.</p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-gray-100 p-6 rounded-lg flex items-start space-x-4">
+                        <i data-lucide="locate-fixed" class="w-8 h-8 text-indigo-600 flex-shrink-0 mt-1"></i>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">Real-Time Monitoring</h3>
+                            <p class="text-gray-600">Track tourist locations and activities to ensure they remain within designated safe zones.</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg flex items-start space-x-4">
+                        <i data-lucide="bell-ring" class="w-8 h-8 text-indigo-600 flex-shrink-0 mt-1"></i>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">Incident Detection & Alerting</h3>
+                            <p class="text-gray-600">Automatically detect anomalies (like falls, prolonged immobility) and alert authorities instantly.</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg flex items-start space-x-4">
+                        <i data-lucide="users" class="w-8 h-8 text-indigo-600 flex-shrink-0 mt-1"></i>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">Emergency Response Coordination</h3>
+                            <p class="text-gray-600">Seamlessly coordinate with local emergency services for rapid and efficient incident response.</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg flex items-start space-x-4">
+                        <i data-lucide="lock" class="w-8 h-8 text-indigo-600 flex-shrink-0 mt-1"></i>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">Data Security & Privacy</h3>
+                            <p class="text-gray-600">Ensure all tourist data is securely stored and accessible only to authorized personnel.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Expected Outcomes Section -->
+        <section id="outcomes" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 text-center">Expected Outcomes</h2>
+                <p class="text-lg text-gray-600 mb-12 text-center max-w-3xl mx-auto">By implementing this system, we aim to create a lasting positive impact on the tourism industry and visitor experience in India.</p>
+                <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-green-100 rounded-full p-3">
+                           <i data-lucide="shield-check" class="w-8 h-8 text-green-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold">Enhanced Tourist Safety</h3>
+                            <p class="text-gray-600">Significantly minimize incidents and ensure timely, effective responses to emergencies.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-green-100 rounded-full p-3">
+                            <i data-lucide="smile" class="w-8 h-8 text-green-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold">Increased Tourist Satisfaction</h3>
+                            <p class="text-gray-600">Foster a greater sense of security, encouraging more visits and boosting the region's reputation.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-green-100 rounded-full p-3">
+                            <i data-lucide="bar-chart-3" class="w-8 h-8 text-green-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold">Data-Driven Insights</h3>
+                            <p class="text-gray-600">Collect and analyze data on tourist behavior to continuously improve safety measures and infrastructure.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-green-100 rounded-full p-3">
+                            <i data-lucide="expand" class="w-8 h-8 text-green-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold">National Scalability</h3>
+                            <p class="text-gray-600">A robust and flexible framework that can be adapted and deployed in any region facing similar challenges.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                 <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 text-center">Get In Touch</h2>
+                <p class="text-lg text-gray-600 mb-12 text-center max-w-3xl mx-auto">Interested in learning more about SurakshaYatra or exploring partnership opportunities? Contact us.</p>
+                <div class="max-w-2xl mx-auto bg-gray-50 p-8 rounded-lg shadow-md">
+                    <form>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <input type="text" placeholder="Your Name" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <input type="email" placeholder="Your Email" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                         <div class="mb-6">
+                             <input type="text" placeholder="Subject" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                         </div>
+                        <div class="mb-6">
+                            <textarea placeholder="Your Message" rows="5" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-indigo-700 transition w-full md:w-auto">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-10">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-2xl font-bold mb-2">SurakshaYatra</p>
+            <p class="text-gray-400">&copy; 2025 SurakshaYatra. All Rights Reserved. Ensuring safer journeys across India.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            // --- Mobile Menu Logic ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                   if(link.getAttribute('href').startsWith('#')) {
+                     mobileMenu.classList.add('hidden');
+                   }
+                });
+            });
+
+            // --- Page Scroll Logic ---
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('a.nav-link');
+
+            const removeAllActive = () => {
+                 navLinks.forEach(link => {
+                    link.classList.remove('active-link');
+                });
+            };
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                  if (this.getAttribute('href').startsWith('#')) {
+                    removeAllActive();
+                    this.classList.add('active-link');
+                  }
+                });
+            });
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '-35% 0px -35% 0px', // Triggers when a section is in the middle 30% of the viewport
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                let isIntersecting = false;
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        isIntersecting = true;
+                        const id = entry.target.getAttribute('id');
+                        removeAllActive();
+
+                        if (id !== 'home') {
+                            const activeLink = document.querySelector(`.nav-link[href="#${id}"]`);
+                            if (activeLink) {
+                                activeLink.classList.add('active-link');
+                            }
+                        }
+                    }
+                });
+                if (!isIntersecting) {
+                   removeAllActive();
+                }
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
+

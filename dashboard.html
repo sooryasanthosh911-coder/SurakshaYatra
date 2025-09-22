@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SurakshaYatra</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- LeafletJS for Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* Dark background */
+        }
+        .sidebar-link.active {
+            background-color: #374151;
+            color: #F9FAFB;
+            border-left: 3px solid #4F46E5;
+        }
+        #map { height: 400px; border-radius: 0.75rem; }
+        .leaflet-control-zoom-in, .leaflet-control-zoom-out { background-color: #374151 !important; color: white !important; border: 1px solid #4B5563 !important; }
+        .leaflet-control-zoom-in:hover, .leaflet-control-zoom-out:hover { background-color: #4B5563 !important; }
+    </style>
+</head>
+<body class="text-gray-200">
+
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-gray-900 text-gray-300 flex flex-col">
+            <div class="p-6 text-center border-b border-gray-700">
+                <a href="index.html" class="text-2xl font-bold text-white flex items-center justify-center">
+                    <i data-lucide="shield-check" class="w-8 h-8 mr-2 text-indigo-400"></i>
+                    <span>SurakshaYatra</span>
+                </a>
+            </div>
+            <nav class="flex-1 px-4 py-6 space-y-2">
+                <a href="#" class="sidebar-link active flex items-center px-4 py-3 rounded-lg hover:bg-gray-700 transition" data-target="dashboard-content">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i> Dashboard
+                </a>
+                <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-lg hover:bg-gray-700 transition" data-target="profile-content">
+                    <i data-lucide="user" class="w-5 h-5 mr-3"></i> My Profile
+                </a>
+                <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-lg hover:bg-gray-700 transition" data-target="history-content">
+                    <i data-lucide="history" class="w-5 h-5 mr-3"></i> Trip History
+                </a>
+                <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-lg hover:bg-gray-700 transition" data-target="contacts-content">
+                    <i data-lucide="contact" class="w-5 h-5 mr-3"></i> Emergency Contacts
+                </a>
+            </nav>
+            <div class="p-4 border-t border-gray-700">
+                 <p class="text-center text-xs text-gray-500">Sooryas Mockup Implementation</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Topbar -->
+            <header class="bg-gray-800 shadow-md">
+                <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+                    <div class="relative flex-1 max-w-xs">
+                        <input type="text" placeholder="Search..." class="bg-gray-700 text-white rounded-full py-2 px-4 pl-10 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <i data-lucide="bell" class="w-6 h-6 text-gray-400 hover:text-white cursor-pointer"></i>
+                        <i data-lucide="settings" class="w-6 h-6 text-gray-400 hover:text-white cursor-pointer"></i>
+                        <a href="login.html" class="bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-700 transition font-medium text-sm">Logout</a>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-800 p-6">
+                <!-- Dashboard Content -->
+                <div id="dashboard-content" class="page-content">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Left Column -->
+                        <div class="lg:col-span-2">
+                            <div class="bg-gray-900 p-4 rounded-lg shadow-lg">
+                                 <div id="map"></div>
+                                 <p class="text-center text-sm text-gray-400 mt-2">Your Real-Time Location</p>
+                            </div>
+
+                            <div class="grid md:grid-cols-3 gap-6 mt-6">
+                                <div class="bg-gray-900 p-6 rounded-lg shadow-lg text-center">
+                                    <i data-lucide="brain-circuit" class="w-12 h-12 text-indigo-400 mx-auto mb-3"></i>
+                                    <h3 class="font-semibold">Artificial Intelligence</h3>
+                                    <p class="text-sm text-gray-400 mt-1">Monitoring for anomalies</p>
+                                </div>
+                                <div class="bg-gray-900 p-6 rounded-lg shadow-lg text-center">
+                                    <i data-lucide="map-pin" class="w-12 h-12 text-indigo-400 mx-auto mb-3"></i>
+                                    <h3 class="font-semibold">Geo-Fencing</h3>
+                                    <p class="text-sm text-gray-400 mt-1">Safe zone boundaries</p>
+                                </div>
+                                 <div class="bg-gray-900 p-6 rounded-lg shadow-lg text-center">
+                                    <i data-lucide="fingerprint" class="w-12 h-12 text-indigo-400 mx-auto mb-3"></i>
+                                    <h3 class="font-semibold">Blockchain Digital ID</h3>
+                                    <p class="text-sm text-gray-400 mt-1">ID securely stored</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="space-y-6">
+                            <div class="bg-gray-900 p-6 rounded-lg shadow-lg">
+                                <h3 class="font-bold text-lg mb-4 text-white">STATUS UPDATES</h3>
+                                <p>Current Zone: <span class="font-semibold text-green-400">Safe</span></p>
+                                <p>Last Check-in: <span id="last-checkin" class="font-semibold text-gray-300">Just now</span></p>
+                                <p>Alerts: <span class="font-semibold text-gray-300">None</span></p>
+                            </div>
+
+                            <div class="bg-gray-900 p-6 rounded-lg shadow-lg">
+                                <h3 class="font-bold text-lg mb-4 text-white">EMERGENCY & SUPPORT</h3>
+                                <button id="sos-button" class="w-full bg-red-600 text-white font-bold py-4 px-4 rounded-lg hover:bg-red-700 transition flex items-center justify-center text-lg mb-4">
+                                    <i data-lucide="siren" class="w-6 h-6 mr-3 animate-pulse"></i> SOS Button
+                                </button>
+                                <div class="space-y-2">
+                                    <button class="support-btn w-full bg-gray-700 text-white font-medium py-3 px-4 rounded-lg hover:bg-gray-600 transition flex items-center">
+                                        <i data-lucide="shield" class="w-5 h-5 mr-3"></i> Contact Authorities
+                                    </button>
+                                    <button class="support-btn w-full bg-gray-700 text-white font-medium py-3 px-4 rounded-lg hover:bg-gray-600 transition flex items-center">
+                                        <i data-lucide="hospital" class="w-5 h-5 mr-3"></i> Local Hospitals
+                                    </button>
+                                    <button class="support-btn w-full bg-gray-700 text-white font-medium py-3 px-4 rounded-lg hover:bg-gray-600 transition flex items-center">
+                                        <i data-lucide="phone" class="w-5 h-5 mr-3"></i> Tourist Helpline
+                                    </button>
+                                    <button class="support-btn w-full bg-gray-700 text-white font-medium py-3 px-4 rounded-lg hover:bg-gray-600 transition flex items-center">
+                                        <i data-lucide="message-square" class="w-5 h-5 mr-3"></i> Live Support Chat
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- My Profile Content -->
+                <div id="profile-content" class="page-content hidden">
+                    <h2 class="text-3xl font-bold text-white mb-6">My Profile</h2>
+                    <div class="bg-gray-900 p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
+                        <form class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">Full Name</label>
+                                <input type="text" value="John Doe" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">Email Address</label>
+                                <input type="email" value="john.doe@example.com" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            </div>
+                             <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">Phone Number</label>
+                                <input type="tel" value="+91 98765 43210" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">Home Address</label>
+                                <textarea rows="3" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">123, ABC Street, New Delhi, India</textarea>
+                            </div>
+                            <div class="text-right">
+                                <button type="submit" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Trip History Content -->
+                <div id="history-content" class="page-content hidden">
+                    <h2 class="text-3xl font-bold text-white mb-6">Trip History</h2>
+                    <div class="bg-gray-900 rounded-lg shadow-lg overflow-x-auto">
+                       <table class="w-full text-left">
+                           <thead class="bg-gray-700">
+                               <tr>
+                                   <th class="p-4 font-semibold">Destination</th>
+                                   <th class="p-4 font-semibold">Date</th>
+                                   <th class="p-4 font-semibold">Duration</th>
+                                   <th class="p-4 font-semibold">Status</th>
+                               </tr>
+                           </thead>
+                           <tbody class="divide-y divide-gray-700">
+                               <tr>
+                                   <td class="p-4">Goa, India</td>
+                                   <td class="p-4">2024-12-15</td>
+                                   <td class="p-4">7 Days</td>
+                                   <td class="p-4"><span class="px-3 py-1 text-sm rounded-full bg-green-900 text-green-300">Completed</span></td>
+                               </tr>
+                               <tr>
+                                   <td class="p-4">Jaipur, Rajasthan</td>
+                                   <td class="p-4">2024-10-20</td>
+                                   <td class="p-4">4 Days</td>
+                                   <td class="p-4"><span class="px-3 py-1 text-sm rounded-full bg-green-900 text-green-300">Completed</span></td>
+                               </tr>
+                               <tr>
+                                   <td class="p-4">Shimla, Himachal Pradesh</td>
+                                   <td class="p-4">2025-06-05</td>
+                                   <td class="p-4">5 Days</td>
+                                   <td class="p-4"><span class="px-3 py-1 text-sm rounded-full bg-blue-900 text-blue-300">Upcoming</span></td>
+                               </tr>
+                           </tbody>
+                       </table>
+                    </div>
+                </div>
+
+                <!-- Emergency Contacts Content -->
+                <div id="contacts-content" class="page-content hidden">
+                    <h2 class="text-3xl font-bold text-white mb-6">Emergency Contacts</h2>
+                    <div class="bg-gray-900 p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
+                        <div class="space-y-4 mb-6">
+                            <div class="flex justify-between items-center bg-gray-800 p-4 rounded-lg">
+                                <div>
+                                    <p class="font-semibold">Jane Doe (Spouse)</p>
+                                    <p class="text-sm text-gray-400">+91 98765 43211</p>
+                                </div>
+                                <button class="text-gray-400 hover:text-white"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
+                            </div>
+                            <div class="flex justify-between items-center bg-gray-800 p-4 rounded-lg">
+                                <div>
+                                    <p class="font-semibold">Dr. Smith (Family Doctor)</p>
+                                    <p class="text-sm text-gray-400">+91 98765 43212</p>
+                                </div>
+                                <button class="text-gray-400 hover:text-white"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
+                            </div>
+                        </div>
+                        <button class="w-full bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition flex items-center justify-center">
+                            <i data-lucide="plus" class="w-5 h-5 mr-2"></i> Add New Contact
+                        </button>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+        <div class="bg-gray-800 rounded-lg p-8 max-w-sm w-full mx-4 shadow-xl">
+            <div class="text-center">
+                <div id="modal-icon" class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-200 mb-4">
+                     <i data-lucide="alert-triangle" class="h-6 w-6 text-red-600"></i>
+                </div>
+                <h3 id="modal-title" class="text-lg font-medium leading-6 text-white">Emergency Alert</h3>
+                <div class="mt-2">
+                    <p id="modal-text" class="text-sm text-gray-400">Are you sure you want to send an SOS? This will immediately notify local authorities with your location.</p>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-center space-x-4">
+                <button id="modal-close" type="button" class="px-6 py-2 bg-gray-600 text-white font-medium rounded-md hover:bg-gray-500">
+                    Cancel
+                </button>
+                 <button id="modal-confirm" type="button" class="px-6 py-2 bg-red-600 text-white font-medium rounded-md hover:bg-red-500">
+                    Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        lucide.createIcons();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Map Initialization ---
+            const map = L.map('map').setView([20.5937, 78.9629], 5); // Default view of India
+
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                subdomains: 'abcd',
+                maxZoom: 20
+            }).addTo(map);
+
+            // Invalidate map size after it becomes visible to fix rendering issues
+            setTimeout(() => { map.invalidateSize() }, 100);
+
+            // --- Geolocation ---
+            if ('geolocation' in navigator) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    map.setView([lat, lon], 13);
+
+                    const userIcon = L.icon({
+                        iconUrl: 'data:image/svg+xml;base64,' + btoa('<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>'),
+                        iconSize: [32, 32],
+                    });
+
+                    L.marker([lat, lon], {icon: userIcon}).addTo(map);
+                    L.circle([lat, lon], {
+                        color: '#4F46E5',
+                        fillColor: '#4F46E5',
+                        fillOpacity: 0.2,
+                        radius: 500
+                    }).addTo(map);
+
+                }, () => {
+                     console.log("Location access denied.");
+                });
+            } else {
+                 console.log("Geolocation is not supported by this browser.");
+            }
+
+            // --- Restricted Zones (Example) ---
+            const restrictedZones = [
+                [[28.6, 77.2], [28.65, 77.2], [28.65, 77.25], [28.6, 77.25]], // Delhi area
+                [[19.0, 72.8], [19.1, 72.8], [19.1, 72.9], [19.0, 72.9]] // Mumbai area
+            ];
+            restrictedZones.forEach(zone => {
+                 L.polygon(zone, {color: 'red', fillColor: '#f03', fillOpacity: 0.4}).addTo(map).bindPopup("Restricted Area");
+            });
+
+            // --- Sidebar Link Activation & Page Switching ---
+            const sidebarLinks = document.querySelectorAll('.sidebar-link');
+            const pageContents = document.querySelectorAll('.page-content');
+
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+
+                    // Update active link
+                    sidebarLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+
+                    // Switch content
+                    const targetId = link.getAttribute('data-target');
+                    pageContents.forEach(content => {
+                        if (content.id === targetId) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+
+                    // Re-render map if dashboard is selected to fix gray-out issue
+                    if (targetId === 'dashboard-content') {
+                        setTimeout(() => { map.invalidateSize() }, 1);
+                    }
+                });
+            });
+
+            // --- Dynamic Status Update ---
+            const lastCheckinEl = document.getElementById('last-checkin');
+            let seconds = 0;
+            setInterval(() => {
+                seconds++;
+                if (seconds < 60) {
+                    lastCheckinEl.textContent = `${seconds} second${seconds > 1 ? 's' : ''} ago`;
+                } else {
+                    const minutes = Math.floor(seconds / 60);
+                    lastCheckinEl.textContent = `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+                }
+            }, 1000);
+
+            // --- Modal Logic ---
+            const modal = document.getElementById('modal');
+            const modalClose = document.getElementById('modal-close');
+            const modalConfirm = document.getElementById('modal-confirm');
+            const modalTitle = document.getElementById('modal-title');
+            const modalText = document.getElementById('modal-text');
+            const modalIcon = document.getElementById('modal-icon');
+
+            const openModal = (title, text, isSos = false) => {
+                modalTitle.textContent = title;
+                modalText.textContent = text;
+                modalConfirm.style.display = isSos ? 'inline-block' : 'none';
+                modalClose.textContent = isSos ? 'Cancel' : 'Close';
+
+                if (isSos) {
+                    modalIcon.innerHTML = `<i data-lucide="alert-triangle" class="h-6 w-6 text-red-600"></i>`;
+                    modalIcon.className = 'mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-200 mb-4';
+                } else {
+                    modalIcon.innerHTML = `<i data-lucide="info" class="h-6 w-6 text-blue-600"></i>`;
+                    modalIcon.className = 'mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-200 mb-4';
+                }
+                lucide.createIcons();
+                modal.classList.remove('hidden');
+            };
+
+            const closeModal = () => modal.classList.add('hidden');
+
+            modalClose.addEventListener('click', closeModal);
+            modalConfirm.addEventListener('click', () => {
+                alert("SOS Confirmed! Authorities have been notified."); // Placeholder for actual functionality
+                closeModal();
+            });
+
+            document.getElementById('sos-button').addEventListener('click', () => {
+                openModal('Emergency Alert', 'Are you sure you want to send an SOS? This will immediately notify local authorities with your location.', true);
+            });
+
+            const supportButtons = document.querySelectorAll('.support-btn');
+            supportButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const type = button.textContent.trim();
+                    openModal(type, `This is a placeholder for the ${type} functionality. In a real application, this would open a direct communication channel.`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
